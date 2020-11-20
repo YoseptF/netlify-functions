@@ -1,6 +1,6 @@
 import { createTransport } from 'nodemailer';
 
-export const handler = (event) => {
+export const handler = async (event) => {
   const { user, pass } = process.env;
 
   const mailTransport = createTransport({
@@ -12,28 +12,29 @@ export const handler = (event) => {
       pass
     }
   })
-  
+
   const { message }: { message: string } = event.queryStringParameters:
 
-  const sendMail = async () => {
-    const saneMessage = message
-      .replace(/minutes/, 'minutes\n')
-      .replace(/UTC/, 'UTC\n')
-      .replace(/Contributors/, '\nContributors')
-    const mailOptions = {
-      from: 'TSE Code Reviews',
-      to: user,
-      subject: 'New code review avaliable',
-      text: `
+  const saneMessage = message
+    .replace(/minutes/, 'minutes\n')
+    .replace(/UTC/, 'UTC\n')
+    .replace(/Contributors/, '\nContributors')
+  const mailOptions = {
+    from: 'TSE Code Reviews',
+    to: user,
+    subject: 'New code review avaliable',
+    text: `
       You have a new Code review:\n ${saneMessage}
       `
-    }
-
-    await mailTransport.sendMail(mailOptions)
-    console.log('New email:', message)
   }
 
-  sendMail()
+  try {
+    await mailTransport.sendMail(mailOptions)
+    console.log('New email:', message)
+  } catch (error) {
+    console.log(error)
+  }
+
 
   return {
     statusCode: 200,

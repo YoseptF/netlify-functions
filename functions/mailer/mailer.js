@@ -38,47 +38,51 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handler = void 0;
 var nodemailer_1 = require("nodemailer");
-var handler = function (event) {
-    var _a = process.env, user = _a.user, pass = _a.pass;
-    var mailTransport = nodemailer_1.createTransport({
-        port: 587,
-        host: 'smtp.gmail.com',
-        auth: {
-            type: 'login',
-            user: user,
-            pass: pass
+var handler = function (event) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, user, pass, mailTransport, message, saneMessage, mailOptions, error_1;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _a = process.env, user = _a.user, pass = _a.pass;
+                mailTransport = nodemailer_1.createTransport({
+                    port: 587,
+                    host: 'smtp.gmail.com',
+                    auth: {
+                        type: 'login',
+                        user: user,
+                        pass: pass
+                    }
+                });
+                message = event.queryStringParameters.message;
+                saneMessage = message
+                    .replace(/minutes/, 'minutes\n')
+                    .replace(/UTC/, 'UTC\n')
+                    .replace(/Contributors/, '\nContributors');
+                mailOptions = {
+                    from: 'TSE Code Reviews',
+                    to: user,
+                    subject: 'New code review avaliable',
+                    text: "\n      You have a new Code review:\n " + saneMessage + "\n      "
+                };
+                _b.label = 1;
+            case 1:
+                _b.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, mailTransport.sendMail(mailOptions)];
+            case 2:
+                _b.sent();
+                console.log('New email:', message);
+                return [3 /*break*/, 4];
+            case 3:
+                error_1 = _b.sent();
+                console.log(error_1);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/, {
+                    statusCode: 200,
+                    body: JSON.stringify({
+                        message: message
+                    })
+                }];
         }
     });
-    var message = event.queryStringParameters.message;
-    var sendMail = function () { return __awaiter(void 0, void 0, void 0, function () {
-        var saneMessage, mailOptions;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    saneMessage = message
-                        .replace(/minutes/, 'minutes\n')
-                        .replace(/UTC/, 'UTC\n')
-                        .replace(/Contributors/, '\nContributors');
-                    mailOptions = {
-                        from: 'TSE Code Reviews',
-                        to: user,
-                        subject: 'New code review avaliable',
-                        text: "\n      You have a new Code review:\n " + saneMessage + "\n      "
-                    };
-                    return [4 /*yield*/, mailTransport.sendMail(mailOptions)];
-                case 1:
-                    _a.sent();
-                    console.log('New email:', message);
-                    return [2 /*return*/];
-            }
-        });
-    }); };
-    sendMail();
-    return {
-        statusCode: 200,
-        body: JSON.stringify({
-            message: message
-        })
-    };
-};
+}); };
 exports.handler = handler;
