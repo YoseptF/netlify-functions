@@ -1,0 +1,28 @@
+{
+  "name": "send-email",
+  "version": "1.0.0",
+  "description": "netlify functions:create - Send email with no SMTP server via 'sendmail' pkg",
+  "main": "send-email.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "keywords": [
+    "netlify",
+    "serverless",
+    "apis",
+    "email",
+    "js"
+  ],
+  "author": "Netlify",
+  "license": "MIT",
+  "dependencies": {
+    "@types/nodemailer": "^6.4.0",
+    "nodemailer": "^6.4.16",
+    "sendmail": "1.6.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.1.2"
+  }
+}
