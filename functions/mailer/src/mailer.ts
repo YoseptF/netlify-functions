@@ -13,7 +13,8 @@ export const handler = async (event) => {
     }
   })
 
-  const { message }: { message: string } = event.queryStringParameters:
+  const { queryStringParameters: { message = ''} } = event;
+  console.log({message})
 
   const saneMessage = message
     .replace(/minutes/, 'minutes\n')

@@ -39,9 +39,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.handler = void 0;
 var nodemailer_1 = require("nodemailer");
 var handler = function (event) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, user, pass, mailTransport, message, saneMessage, mailOptions, error_1;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
+    var _a, user, pass, mailTransport, _b, message, saneMessage, mailOptions, error_1;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
             case 0:
                 _a = process.env, user = _a.user, pass = _a.pass;
                 mailTransport = nodemailer_1.createTransport({
@@ -53,7 +53,8 @@ var handler = function (event) { return __awaiter(void 0, void 0, void 0, functi
                         pass: pass
                     }
                 });
-                message = event.queryStringParameters.message;
+                _b = event.queryStringParameters.message, message = _b === void 0 ? '' : _b;
+                console.log({ message: message });
                 saneMessage = message
                     .replace(/minutes/, 'minutes\n')
                     .replace(/UTC/, 'UTC\n')
@@ -64,16 +65,16 @@ var handler = function (event) { return __awaiter(void 0, void 0, void 0, functi
                     subject: 'New code review avaliable',
                     text: "\n      You have a new Code review:\n " + saneMessage + "\n      "
                 };
-                _b.label = 1;
+                _c.label = 1;
             case 1:
-                _b.trys.push([1, 3, , 4]);
+                _c.trys.push([1, 3, , 4]);
                 return [4 /*yield*/, mailTransport.sendMail(mailOptions)];
             case 2:
-                _b.sent();
+                _c.sent();
                 console.log('New email:', message);
                 return [3 /*break*/, 4];
             case 3:
-                error_1 = _b.sent();
+                error_1 = _c.sent();
                 console.log(error_1);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/, {
