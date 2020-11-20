@@ -7,11 +7,3 @@
 
 [[plugins]]
 package = "@netlify/plugin-functions-install-core"
-
-[[redirects]]
-  from = "/mailer"
-  to = "/.netlify/functions/mailer"
-  status = 200
-
-  [redirects.headers]
-     Access-Control-Allow-Origin = "*"

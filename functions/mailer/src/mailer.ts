@@ -1,6 +1,12 @@
 import { createTransport } from 'nodemailer';
 
-export const handler = async (event) => {
+type eventType = {
+  queryStringParameters: {
+    message: string
+  }
+}
+
+export const handler = async (event: eventType) => {
   const { user, pass } = process.env;
 
   const mailTransport = createTransport({
@@ -39,6 +45,9 @@ export const handler = async (event) => {
 
   return {
     statusCode: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
     body: JSON.stringify({
       message
     })

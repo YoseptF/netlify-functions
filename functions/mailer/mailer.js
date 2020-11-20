@@ -79,6 +79,9 @@ var handler = function (event) { return __awaiter(void 0, void 0, void 0, functi
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/, {
                     statusCode: 200,
+                    headers: {
+                        'Access-Control-Allow-Origin': '*',
+                    },
                     body: JSON.stringify({
                         message: message
                     })
