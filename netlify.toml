@@ -7,3 +7,8 @@
 
 [[plugins]]
 package = "@netlify/plugin-functions-install-core"
+
+[[headers]]
+  for = "/.netlify/functions/mailer"
+    [headers.values]
+    Access-Control-Allow-Origin = "*"

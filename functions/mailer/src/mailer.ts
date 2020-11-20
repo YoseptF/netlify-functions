@@ -13,7 +13,7 @@ export const handler = async (event) => {
     }
   })
 
-  const { queryStringParameters: { message = ''} } = event;
+  const { message = '' } = event.queryStringParameters;
   console.log({message})
 
   const saneMessage = message
